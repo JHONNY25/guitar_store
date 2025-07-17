@@ -5,9 +5,18 @@ import  Footer from './Components/Footer'
 import  {db} from './Database/db'
 
 function App() {
+    const initialCart = () =>{
+        const localStorageCart = localStorage.getItem('cart')
+
+        return localStorageCart ? JSON.parse(localStorageCart) : []
+    }
   const [database, setDatabase] = useState(db)
-  const [cart, setCart] = useState([])
+  const [cart, setCart] = useState(initialCart)
   const MIN_ITEMS = 1
+
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cart))
+  }, [cart])
 
   function addToCart(item){
     const itemExist = cart.findIndex(guitar => guitar.id === item.id)
@@ -27,7 +36,7 @@ function App() {
     setCart(prevCart => prevCart.filter(guitar => guitar.id !== id))
   }
 
-  function cartIncrement(id){
+  function cartIncreaseQuantity(id){
     const updatedCart = cart.map(item => {
         if(item.id === id){
             return {
@@ -40,7 +49,7 @@ function App() {
     setCart(updatedCart)
   }
 
-  function cartDecrement(id){
+  function cartDecreaseQuantity(id){
     const updatedCart = cart.map(item => {
         if(item.id === id && item.quantity > MIN_ITEMS){
             return {
@@ -53,13 +62,14 @@ function App() {
     setCart(updatedCart)
   }
 
-  function cleanCart(){ 
+  function clearCart(){ 
     setCart([])
   }
 
+
   return (
     <>
-        <Header cart={cart} removeFromCart={removeFromCart} cartIncrement={cartIncrement} cartDecrement={cartDecrement} cleanCart={cleanCart} />
+        <Header cart={cart} removeFromCart={removeFromCart} cartIncreaseQuantity={cartIncreaseQuantity} cartDecreaseQuantity={cartDecreaseQuantity} clearCart={clearCart} />
 
         <main className="container-xl mt-5">
             <h2 className="text-center">Nuestra Colección</h2>

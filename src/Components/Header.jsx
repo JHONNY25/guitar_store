@@ -1,6 +1,6 @@
 import { useMemo } from "react"
 
-export default function Header({cart,removeFromCart,cartIncrement,cartDecrement, cleanCart}) {
+export default function Header({cart,removeFromCart,cartIncreaseQuantity,cartDecreaseQuantity, clearCart}) {
     
     //state derivado
     //use memo hace que el codigo se ejecute cuando hay un cambio en cart
@@ -56,7 +56,7 @@ export default function Header({cart,removeFromCart,cartIncrement,cartDecrement,
                                                                 <button
                                                                     type="button"
                                                                     className="btn btn-dark"
-                                                                    onClick={() => cartDecrement(guitar.id)}
+                                                                    onClick={() => cartDecreaseQuantity(guitar.id)}
                                                                 >
                                                                     -
                                                                 </button>
@@ -64,7 +64,7 @@ export default function Header({cart,removeFromCart,cartIncrement,cartDecrement,
                                                                 <button
                                                                     type="button"
                                                                     className="btn btn-dark"
-                                                                    onClick={() => cartIncrement(guitar.id)}
+                                                                    onClick={() => cartIncreaseQuantity(guitar.id)}
                                                                 >
                                                                     +
                                                                 </button>
@@ -87,7 +87,7 @@ export default function Header({cart,removeFromCart,cartIncrement,cartDecrement,
                                     )
                                  }
 
-                                <button className="btn btn-dark w-100 mt-3 p-2" onClick={() => cleanCart()}>Vaciar Carrito</button>
+                                <button className="btn btn-dark w-100 mt-3 p-2" onClick={() => clearCart()}>Vaciar Carrito</button>
                             </div>
                         </div>
                     </nav>
